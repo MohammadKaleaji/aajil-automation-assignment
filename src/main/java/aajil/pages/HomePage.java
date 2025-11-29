@@ -14,7 +14,7 @@ public class HomePage extends BasePage {
 
     public HomePage(WebDriver driver) {
         super(driver);
-        waitForElementVisible(fromSelect);   // تأكد أن الصفحة تحمل
+        waitForElementVisible(fromSelect);   // make sure page is loading
     }
 
     public FlightsPage searchFlights(String fromCity, String toCity) {

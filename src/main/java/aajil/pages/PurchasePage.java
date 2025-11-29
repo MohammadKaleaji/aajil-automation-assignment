@@ -8,35 +8,34 @@ import org.openqa.selenium.support.ui.Select;
 import java.util.Random;
 
 /**
- * Page Object لصفحة شراء التذكرة (purchase.php) في موقع BlazeDemo.
+ * Page Object purchase page
  */
 public class PurchasePage extends BasePage {
 
     // ===== Locators for form fields =====
-    private final By nameInput            = By.id("inputName");
-    private final By addressInput         = By.id("address");
-    private final By cityInput            = By.id("city");
-    private final By stateInput           = By.id("state");
-    private final By zipCodeInput         = By.id("zipCode");
+    private final By nameInput = By.id("inputName");
+    private final By addressInput = By.id("address");
+    private final By cityInput = By.id("city");
+    private final By stateInput = By.id("state");
+    private final By zipCodeInput = By.id("zipCode");
 
-    private final By cardTypeSelect       = By.id("cardType");
-    private final By cardNumberInput      = By.id("creditCardNumber");
-    private final By cardMonthInput       = By.id("creditCardMonth");
-    private final By cardYearInput        = By.id("creditCardYear");
-    private final By nameOnCardInput      = By.id("nameOnCard");
-    private final By rememberMeCheckbox   = By.id("rememberMe");
+    private final By cardTypeSelect = By.id("cardType");
+    private final By cardNumberInput = By.id("creditCardNumber");
+    private final By cardMonthInput = By.id("creditCardMonth");
+    private final By cardYearInput = By.id("creditCardYear");
+    private final By nameOnCardInput = By.id("nameOnCard");
+    private final By rememberMeCheckbox = By.id("rememberMe");
 
-    private final By purchaseButton       =
-            By.cssSelector("input[type='submit'][value='Purchase Flight']");
+    private final By purchaseButton = By.cssSelector("input[type='submit'][value='Purchase Flight']");
 
     // ===== Constructor =====
     public PurchasePage(WebDriver driver) {
         super(driver);
-        // تأكيد بسيط أننا فعلاً على صفحة الشراء
+        // confirmation we are in purchase page
         waitForElementVisible(nameInput);
     }
 
-    // ===== Helper class لتمثيل بيانات مستخدم وهمي =====
+    // ===== Helper class used for dummy user data====
     private static class DummyUser {
         final String fullName;
         final String address;
@@ -48,72 +47,72 @@ public class PurchasePage extends BasePage {
         final String year;
 
         DummyUser(String fullName,
-                  String address,
-                  String city,
-                  String state,
-                  String zipCode,
-                  String cardNumber,
-                  String month,
-                  String year) {
+                String address,
+                String city,
+                String state,
+                String zipCode,
+                String cardNumber,
+                String month,
+                String year) {
 
-            this.fullName   = fullName;
-            this.address    = address;
-            this.city       = city;
-            this.state      = state;
-            this.zipCode    = zipCode;
+            this.fullName = fullName;
+            this.address = address;
+            this.city = city;
+            this.state = state;
+            this.zipCode = zipCode;
             this.cardNumber = cardNumber;
-            this.month      = month;
-            this.year       = year;
+            this.month = month;
+            this.year = year;
         }
     }
 
     /**
-     * ينشئ بيانات مستخدم وهمية (dummy) عشوائية في كل مرة.
+     * generating the dummy
      */
     private DummyUser generateRandomUser() {
         Random rnd = new Random();
         int id = rnd.nextInt(9999);
 
-        String fullName   = "User " + id;
-        String address    = "Street " + id;
-        String city       = "City " + id;
-        String state      = "ST";
-        String zipCode    = String.valueOf(10000 + id);
-        String cardNumber = "4111111111111111";       // Visa test number
-        String month      = String.valueOf(1 + rnd.nextInt(12)); // 1..12
-        String year       = String.valueOf(2025 + rnd.nextInt(5)); // 2025..2029
+        String fullName = "User " + id;
+        String address = "Street " + id;
+        String city = "City " + id;
+        String state = "ST";
+        String zipCode = String.valueOf(10000 + id);
+        String cardNumber = "4111111111111111"; // Visa test number
+        String month = String.valueOf(1 + rnd.nextInt(12)); // 1..12
+        String year = String.valueOf(2025 + rnd.nextInt(5)); // 2025..2029
 
         return new DummyUser(fullName, address, city, state, zipCode,
-                             cardNumber, month, year);
+                cardNumber, month, year);
     }
 
     // ==================================================================
-    // 1) نسخة مرنة: نمرّر البيانات من التست (تستخدمها لو حابب تتحكم يدويًا)
+    // 1) Flexible flavor: data comes from the test when ya wanna control stuff
     // ==================================================================
     /**
-     * يكمّل عملية الشراء بالبيانات المعطاة من التست.
-     * يعود بنا إلى صفحة التأكيد ConfirmationPage.
+     * Finishes the purchase using the test-provided data.
+     * Brings us back to the ConfirmationPage.
      */
     public ConfirmationPage completePurchase(String fullName,
-                                             String address,
-                                             String city,
-                                             String state,
-                                             String zipCode,
-                                             String cardTypeValue,   // "visa" / "amex" / "dinersclub"
-                                             String cardNumber,
-                                             String month,
-                                             String year,
-                                             String nameOnCard,
-                                             boolean rememberMe) {
+            String address,
+            String city,
+            String state,
+            String zipCode,
+            String cardTypeValue, // "visa" / "amex" / "dinersclub"
+            String cardNumber,
+            String month,
+            String year,
+            String nameOnCard,
+            boolean rememberMe) {
 
-        // تعبئة الحقول النصية
+        // Fill the text fields real quick
         type(nameInput, fullName);
         type(addressInput, address);
         type(cityInput, city);
         type(stateInput, state);
         type(zipCodeInput, zipCode);
 
-        // اختيار نوع البطاقة من <select>
+        // Grab the card type from the <select>
         Select cardType = new Select(driver.findElement(cardTypeSelect));
         cardType.selectByValue(cardTypeValue);
 
@@ -129,21 +128,21 @@ public class PurchasePage extends BasePage {
         // Submit
         click(purchaseButton);
 
-        // ننتقل لصفحة التأكيد
+        // Bounce to the confirmation page
         return new ConfirmationPage(driver);
     }
 
     // ==================================================================
-    // 2) نسخة تعتمد على random dummy user في كل Run
+    // 2) Flavor that leans on a random dummy user every run
     // ==================================================================
     /**
-     * يملأ فورم الشراء ببيانات وهمية عشوائية في كل مرة
-     * (مطلوبة في الـ assessment: dummy data generated randomly each time).
+     * Fills the purchase form with fresh dummy data each single time
+     * (needed for the assessment: dummy data generated randomly each run).
      */
     public ConfirmationPage completePurchaseWithRandomData() {
         DummyUser user = generateRandomUser();
 
-        // نستخدم Visa دائمًا هنا (ممكن نخليها random لو حاب)
+        // We stick with Visa here (could randomize it if ya feel like it)
         String cardTypeValue = "visa";
 
         return completePurchase(
@@ -157,15 +156,15 @@ public class PurchasePage extends BasePage {
                 user.month,
                 user.year,
                 user.fullName,
-                false   // rememberMe
+                false // rememberMe
         );
     }
 
     // ==================================================================
-    // 3) نسخة ثابتة (مفيدة أحياناً للتجارب السريعة / Debug)
+    // 3) Static flavor (handy for quick experiments / debug)
     // ==================================================================
     /**
-     * نسخة مختصرة ببيانات ثابتة – تستخدم للاختبارات السريعة.
+     * Short version with fixed data – nice for quick smoke checks.
      */
     public ConfirmationPage completePurchaseWithDefaultData() {
         return completePurchase(
@@ -179,7 +178,6 @@ public class PurchasePage extends BasePage {
                 "11",
                 "2028",
                 "John Test",
-                false
-        );
+                false);
     }
 }

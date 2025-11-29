@@ -9,23 +9,23 @@ import java.util.List;
 
 public class FlightsPage extends BasePage {
 
-    // صفوف جدول الرحلات
-    private final By flightRows   = By.cssSelector("table.table tbody tr");
+    // Rows from the flights table
+    private final By flightRows = By.cssSelector("table.table tbody tr");
     private final By chooseButtons = By.cssSelector("table.table tbody tr td input[type='submit']");
 
     public FlightsPage(WebDriver driver) {
         super(driver);
-        // تأكد أن جدول الرحلات ظهر
+        // Make sure the flights table actually showed up
         waitForElementVisible(flightRows);
     }
 
-    // عدد الرحلات المتاحة
+    // How many flights are available now
     public int getNumberOfFlights() {
         List<WebElement> rows = driver.findElements(flightRows);
         return rows.size();
     }
 
-    // اختيار رحلة حسب الترتيب (1 = أول رحلة)
+    // Pick a flight by its order (1 = first flight)
     public PurchasePage chooseFlightByIndex(int flightSeq) {
         List<WebElement> buttons = driver.findElements(chooseButtons);
 

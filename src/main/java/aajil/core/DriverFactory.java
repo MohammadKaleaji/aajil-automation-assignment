@@ -6,14 +6,14 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class DriverFactory {
 
-    // نستخدم instance واحدة من WebDriver
+    // We keep a single WebDriver instance for the whole run
     private static WebDriver driver;
 
     public static WebDriver getDriver() {
         if (driver == null) {
-            // إعدادات بسيطة للكروم (تقدر تضيف خيارات لو حابب)
+            // Basic Chrome setup (feel free to toss in more switches)
             ChromeOptions options = new ChromeOptions();
-            // لو حابب تشغيل بدون واجهة:
+            // If you need headless mode:
             // options.addArguments("--headless=new");
 
             driver = new ChromeDriver(options);

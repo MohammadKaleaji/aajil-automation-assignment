@@ -18,7 +18,7 @@ public class PurchaseTest {
     private WebDriver driver;
     private final Random random = new Random();
 
-    // المدن المتاحة كما هي في الموقع
+    // cities as in the site
     private static final List<String> DEPARTURE_CITIES = Arrays.asList(
             "Paris", "Philadelphia", "Boston", "Portland", "San Diego", "Mexico City", "São Paolo"
     );
@@ -157,7 +157,7 @@ public class PurchaseTest {
                 "Flight index 0 should be rejected");
     }
 
-    // 5) Any inputs of your choice – نختار مثلاً: Mexico City → Dublin رحله 1
+    // 5) Any inputs of your choice –  Mexico City → Dublin  1
     @Test
     public void test_case5_customRoute() {
         purchaseEndToEnd("Mexico City", "Dublin", 1);

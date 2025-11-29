@@ -1,7 +1,7 @@
-aajil\core\BasePage.class
-aajil\core\DriverFactory.class
-aajil\pages\PurchasePage$DummyUser.class
-aajil\pages\HomePage.class
-aajil\pages\ConfirmationPage.class
-aajil\pages\FlightsPage.class
-aajil\pages\PurchasePage.class
+aajil/core/DriverFactory.class
+aajil/pages/HomePage.class
+aajil/pages/FlightsPage.class
+aajil/pages/ConfirmationPage.class
+aajil/core/BasePage.class
+aajil/pages/PurchasePage$DummyUser.class
+aajil/pages/PurchasePage.class
